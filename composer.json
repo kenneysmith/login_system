@@ -1,0 +1,11 @@
+{
+    "name": "pc/login_system",
+    "autoload": {
+        "psr-4": {
+            "Pc\\LoginSystem\\": "src/"
+        }
+    },
+    "require": {
+        "phpmailer/phpmailer": "^6.10"
+    }
+}

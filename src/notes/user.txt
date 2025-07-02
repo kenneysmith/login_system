@@ -1,0 +1,10 @@
+
+fullname
+email
+password
+gender
+contact
+address
+dob
+timestamp
+on_update
