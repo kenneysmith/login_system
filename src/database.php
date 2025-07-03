@@ -1,9 +1,10 @@
 <?php
+require_once '../bootstrap.php';
 
-$host = 'localhost';
-$dbname = 'login_system';
-$username = 'root';
-$password = '';
+$host = $_ENV['DB_HOST'];
+$dbname = $_ENV['DB_DATABASE'];
+$username = $_ENV['DB_USERNAME'];
+$password = $_ENV['DB_PASSWORD'];
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
