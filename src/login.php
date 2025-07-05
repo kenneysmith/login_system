@@ -8,6 +8,7 @@ require_once __DIR__ . '/helpers/notifications.php';
 require_once __DIR__ . '/helpers/header.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    http_response_code(405);
     echo json_encode([
         'statusCode' => 405,
         'success'    => false,
@@ -21,6 +22,7 @@ $jsonData = json_decode(file_get_contents('php://input'), true);
 
 # Validate JSON data
 if (! isset($jsonData['email']) || ! isset($jsonData['password'])) {
+    http_response_code(400);
     echo json_encode([
         'statusCode' => 400,
         'success'    => false,
@@ -39,6 +41,7 @@ try {
     $sql->execute();
 
     if ($sql->rowCount() === 0) {
+        http_response_code(401);
         echo json_encode([
             'statusCode' => 401,
             'success'    => false,
@@ -50,6 +53,7 @@ try {
     $user = $sql->fetch(PDO::FETCH_ASSOC);
 
     if ($user['status'] !== 'active') {
+        http_response_code(401);
         echo json_encode([
             'statusCode' => 401,
             'success'    => false,
@@ -59,6 +63,7 @@ try {
         exit;
     }
     if (! password_verify($password, $user['password'])) {
+        http_response_code(401);
         echo json_encode([
             'statusCode' => 401,
             'success'    => false,
@@ -75,7 +80,7 @@ try {
     $_SESSION['user_contact']  = $user['contact'];
     $_SESSION['user_address']  = $user['address'];
     $_SESSION['user_status']   = $user['status'];
-
+    http_response_code(201);
     echo json_encode([
         'statusCode' => 201,
         'success'    => true,
