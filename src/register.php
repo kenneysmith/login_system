@@ -2,10 +2,11 @@
 
 session_start();
 
-require_once 'database.php';
-require_once '../bootstrap.php';
-require_once 'helpers/notifications.php';
-require_once 'helpers/header.php';
+require_once __DIR__ . '/database.php';
+require_once __DIR__ . '/../bootstrap.php';
+require_once __DIR__ . '/helpers/notifications.php';
+require_once __DIR__ . '/helpers/header.php';
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode([
         'statusCode' => 405,
@@ -74,14 +75,17 @@ try {
     $sql->bindParam(':gender', $gender);
     $sql->bindParam(':dob', $dob);
     $sql->execute();
-
+    
+    $lastInsertId = $pdo->lastInsertId();
+    
     $pdo->commit();
 
     $otpCode = rand(100000, 999999);
 
     $message = "Your OTP code is: $otpCode. Please use this code to complete your registration.";
    
-    $_SESSION['user_id'] = $pdo->lastInsertId();
+    // print_r($lastInsertId);
+    $_SESSION['user_id'] = $lastInsertId;
     $_SESSION['otp_code'] = $otpCode;
 
     // Send SMS notification

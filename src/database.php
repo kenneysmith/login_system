@@ -1,5 +1,5 @@
 <?php
-require_once '../bootstrap.php';
+require_once __DIR__ . '/../bootstrap.php';
 
 $host = $_ENV['DB_HOST'];
 $dbname = $_ENV['DB_DATABASE'];
